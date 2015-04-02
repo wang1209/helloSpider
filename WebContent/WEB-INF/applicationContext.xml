@@ -14,7 +14,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close"
 		p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://192.168.171.137:3306/sdgdb"
+		p:jdbcUrl="jdbc:mysql://192.168.228.128:3306/sdgdb"
 		p:user="wangyang"
 		p:password="123123"
 		p:maxPoolSize="40"
@@ -26,10 +26,12 @@
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
 		p:dataSource-ref="dataSource">
 		<!-- mappingResources用来列出全部映射文件 -->
-		<property name="annotatedClasses">
+		<!-- <property name="annotatedClasses"> -->
+		<property name="mappingResources">
 			<list>
 				<!-- 以下用来列出所有的PO类-->
-				<value>org.crazyit.booksys.domain.Book</value>
+				<value>org/sdgit/spider/domain/Tuser.hbm.xml</value>
+				<value>org.sdgit.spider.domain.WebInfoEntity</value>
 			</list>
 		</property>
 		<!-- 定义Hibernate SessionFactory的属性 -->
@@ -45,12 +47,12 @@
 			</props>
 		</property>
 	</bean>
-	<!-- 定义Service组件，并将DAO组件注入Service组件 -->	
+<!-- 	定义Service组件，并将DAO组件注入Service组件	
 	<bean id="bookService" class="org.crazyit.booksys.service.impl.BookServiceImpl"
 		p:bookDao-ref="bookDao"/>
-	<!-- 定义DAO组件，并将SessionFactory注入DAO组件 -->		
+	定义DAO组件，并将SessionFactory注入DAO组件		
 	<bean id="bookDao" class="org.crazyit.booksys.dao.impl.BookDaoHibernate4"
-		p:sessionFactory-ref="sessionFactory"/>
+		p:sessionFactory-ref="sessionFactory"/> -->
 	
 	<!-- 配置Hibernate的局部事务管理器，使用HibernateTransactionManager类 -->
 	<!-- 该类是PlatformTransactionManager接口针对采用Hibernate的特定实现类 -->
@@ -73,11 +75,11 @@
 </tx:advice>
 <!-- AOP配置的元素 -->
 <aop:config>
-	<!-- 配置一个切入点 -->
+	<!-- <!-- 配置一个切入点 -->
 	<aop:pointcut id="myPointcut" expression="bean(bookService)"/>
-	<!-- 指定在myPointcut切入点应用txAdvice事务增强处理 -->
+	指定在myPointcut切入点应用txAdvice事务增强处理
 	<aop:advisor advice-ref="txAdvice" 
-		pointcut-ref="myPointcut"/>
+		pointcut-ref="myPointcut"/> -->
 </aop:config>
 	
 </beans>
